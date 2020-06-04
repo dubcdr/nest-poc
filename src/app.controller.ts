@@ -5,11 +5,13 @@ import { CacheInterceptor } from './cache.interceptor';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService, private readonly cacheInterceptor: CacheInterceptor) {}
 
   @Get()
   @UseInterceptors(CacheInterceptor)
   getHello(): string {
-    return this.appService.getHello();
+    const response = this.appService.getHello();
+    console.log(`Debug number from getDebug method ${this.cacheInterceptor.getDebugNumber()}`);
+    return response;
   }
 }
